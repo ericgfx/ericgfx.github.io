@@ -5,6 +5,26 @@ html, body {
   margin: 0;
   padding: 0;
 }
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #6ba5d0;
+}
+.container .text-margin {
+  margin: 20px 0;
+}
+
 
 .header {
   background: rgba(255,255,255,0.95);
