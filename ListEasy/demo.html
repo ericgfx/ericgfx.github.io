@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://s3.amazonaws.com/codecademy-content/projects/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
+    <style>
+        html,
+        body {
+            background: url(https://s3.amazonaws.com/codecademy-content/projects/2/listeasy/bg.png);
+            background-size: 350px 450px;
+            font-family: 'Arvo', serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 2px rgba(0, 0, 0, .15);
+            position: fixed;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #473e39;
+            font-weight: 400;
+            margin: 0;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .main {
+            padding: 120px 10px 0;
+            width: 100%;
+        }
+        
+        .list p {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 2px rgba(0, 0, 0, .15);
+            color: #473e39;
+            font-size: 16px;
+            margin: 0 auto 5px;
+            padding: 20px;
+            max-width: 520px;
+        }
+        
+        .list p .glyphicon-star {
+            cursor: pointer;
+            margin: 0 10px 0 10px;
+        }
+        
+        .list p .glyphicon-star:hover,
+        .list p .active {
+            color: #ffcc00;
+        }
+        
+        .list p .glyphicon-remove {
+            cursor: pointer;
+            float: right;
+        }
+        
+        .list p .glyphicon-remove:hover {
+            color: #ed1c24;
+        }
+        
+        form.form {
+            color: #473e39;
+            height: 60px;
+            margin: 0 auto 5px;
+            padding: 0;
+            width: 380px;
+        }
+        
+        .form-container {
+            max-width: 380px;
+        }
+        
+        .form input {
+            background: rgba(228, 228, 228, .95);
+            border: none;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, .15);
+            color: #473e39;
+            float: left;
+            font-family: 'Arvo', serif;
+            font-size: 16px;
+            height: 60px;
+            margin: 0 5px 0 0;
+            padding: 0 20px;
+            width: 315px;
+        }
+        
+        .form input:focus {
+            background: rgba(255, 255, 255, .95);
+            box-shadow: 0 2px 2px rgba(0, 0, 0, .15);
+            outline: none;
+        }
+        
+        .form button.btn {
+            background: rgba(0, 84, 166, 0.95);
+            border: none;
+            border-radius: 0;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, .15);
+            color: #fff;
+            float: left;
+            font-family: 'Arvo', serif;
+            font-size: 16px;
+            height: 60px;
+            width: 60px;
+        }
+        
+        .form button:hover {
+            background: rgba(0, 129, 255, 0.95);
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>SpeakEasy</h1> </div>
+    <div class="main">
+        <div class="list">
+            <p>
+                <input type="checkbox"> <i class="glyphicon glyphicon-star"></i> <span>Brie</span> <i class="glyphicon glyphicon-remove"></i> </p>
+            <p>
+                <input type="checkbox"> <i class="glyphicon glyphicon-star"></i> <span>Bread</span> <i class="glyphicon glyphicon-remove"></i> </p>
+            <p>
+                <input type="checkbox"> <i class="glyphicon glyphicon-star"></i> <span>Sparkling Cider</span> <i class="glyphicon glyphicon-remove"></i> </p>
+            <p>
+                <input type="checkbox" checked> <i class="glyphicon glyphicon-star"></i> <span>Strawberries</span> <i class="glyphicon glyphicon-remove"></i> </p>
+            <p>
+                <input type="checkbox"> <i class="glyphicon glyphicon-star"></i> <span>Chocolate Mousse</span> <i class="glyphicon glyphicon-remove"></i> </p>
+            <p>
+                <input type="checkbox"> <i class="glyphicon glyphicon-star active"></i> <span>Figs</span> <i class="glyphicon glyphicon-remove"></i> </p>
+        </div>
+        <form class="form">
+            <div class="form-container">
+                <input id="todo" type="text" class="form-input" placeholder="Add item"> </div>
+            <button type="submit" class="btn">+</button>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/1.4.0/annyang.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        var template = function(text) {
+            return '<p><input type="checkbox"><i class="glyphicon glyphicon-star"></i><span>' + text + '</span><i class="glyphicon glyphicon-remove"></i></p>';
+        };
+        var add = function(item) {
+            var html = template(item);
+            $(html).appendTo('.list');
+        };
+        var main = function() {
+            $('form').submit(function() {
+                var todo = $('#todo');
+                if (todo.val() !== "") {
+                    var html = template(todo.val());
+                    $(html).appendTo('.list');
+                    $(todo).val("");
+                }
+                return false;
+            });
+            $(document).on("click", '.glyphicon-remove', function() {
+                $(this).parent().remove();
+            });
+            $(document).on("click", '.glyphicon-star', function() {
+                $(this).toggleClass('active');
+            });
+            if (annyang) {
+                var commands = {
+                    'add *item': add,
+                };
+                annyang.addCommands(commands);
+                annyang.start();
+            }
+        };
+        $(document).ready(main);
+    </script>
+</body>
+
+</html>
