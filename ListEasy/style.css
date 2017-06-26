@@ -107,5 +107,11 @@ form.form {
 
 .form button:hover {
   background: rgba(0,129,255,0.95);
-  cursor: pointer;
+  cursor: pointer;  
+}
+
+.legal {
+  background-color: #272a30;
+  color:#5c6068;
+  font-size:0.8rem;
 }
